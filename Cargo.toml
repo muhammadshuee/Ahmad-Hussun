@@ -8,6 +8,7 @@ authors = ["GroupPay Stellar Contributors"]
 repository = "https://github.com/YOUR_ORG/grouppay-stellar"
 
 [lib]
+name = "GroupPay"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]

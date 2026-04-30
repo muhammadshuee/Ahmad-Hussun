@@ -8,6 +8,18 @@
 
 ---
 
+## Project Description
+
+GroupPay Stellar is a decentralized group payment and escrow application built on the Stellar blockchain using Soroban smart contracts. It allows any group — freelancers, students, or small teams — to pool money together toward a shared goal (rent, event fees, supplier payments) without trusting a single person to hold the funds. Contributions are locked in an on-chain escrow, automatically released to the recipient when the target is met, or refunded to each contributor if the deadline passes unfunded. Built for Southeast Asia where group payments are common but informal, costly, and unreliable.
+
+---
+
+## Project Vision
+
+GroupPay Stellar aims to become the go-to trustless payment layer for informal group finance across Southeast Asia. Today, millions of freelancers, student organizations, and small businesses in the Philippines, Indonesia, and Vietnam split costs manually — chasing payments across GCash, Maya, and bank transfers with no enforcement, no transparency, and no safety net. Our vision is a world where any group can create a payment pool in 30 seconds, contribute from any wallet, and trust that the money moves exactly as agreed — automatically, on-chain, for fractions of a cent. Long-term, GroupPay Stellar will integrate local fiat on-ramps (GCash → USDC via MoneyGram Ramps), AI-powered bill-split suggestions, and recurring payment schedules, making blockchain-native group finance as simple as sending a link.
+
+---
+
 ## 🧩 Problem
 
 A group of 5 freelancers in Manila sharing an office rental cannot easily collect
