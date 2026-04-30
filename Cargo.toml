@@ -1,11 +1,20 @@
-[workspace]
-resolver = "2"
-members = [
-  "contracts/*",
-]
+[package]
+name = "grouppay_stellar"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Decentralized group bill-splitting and escrow on Stellar"
+authors = ["GroupPay Stellar Contributors"]
+repository = "https://github.com/YOUR_ORG/grouppay-stellar"
 
-[workspace.dependencies]
-soroban-sdk = "25"
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+soroban-sdk = { version = "22.0.0", features = ["alloc"] }
+
+[dev-dependencies]
+soroban-sdk = { version = "22.0.0", features = ["testutils", "alloc"] }
 
 [profile.release]
 opt-level = "z"
@@ -17,7 +26,6 @@ panic = "abort"
 codegen-units = 1
 lto = true
 
-# For more information about this profile see https://soroban.stellar.org/docs/basic-tutorials/logging#cargotoml-profile
 [profile.release-with-logs]
 inherits = "release"
 debug-assertions = true

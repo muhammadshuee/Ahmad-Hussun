@@ -1,118 +1,271 @@
-# Stellar Notes DApp
+# GroupPay Stellar 💸
 
-**Stellar Notes DApp** - Blockchain-Based Decentralized Note-Taking System
+> Decentralized group bill-splitting and escrow — split costs fairly, pay atomically, on Stellar.
 
-## Project Description
-
-Stellar Notes DApp is a decentralized smart contract solution built on the Stellar blockchain using Soroban SDK. It provides a secure, immutable platform for managing personal notes directly on the blockchain. The contract ensures that your data is stored transparently and is only manageable through predefined smart contract functions, eliminating reliance on centralized database providers.
-
-The system allows users to create, view, and delete notes, leveraging the efficiency and security of the Stellar network. Each note is uniquely identified and stored within the contract's instance storage, ensuring data persistence and reliability.
-
-## Project Vision
-
-Our vision is to revolutionize personal productivity in the digital age by:
-
-- **Decentralizing Data**: Moving note-taking from centralized servers to a global, distributed blockchain
-- **Ensuring Ownership**: Empowering users to have complete control and ownership over their digital thoughts and information
-- **Guaranteeing Immutability**: Providing a permanent, tamper-proof record of notes that cannot be altered or deleted by third parties
-- **Enhancing Privacy**: Leveraging blockchain security to protect personal information from unauthorized access
-- **Building Trustless Systems**: Creating a platform where data integrity is guaranteed by code, not by company promises
-
-We envision a future where digital information is truly personal and sovereign, empowering individuals with complete autonomy over their digital assets.
-
-## Key Features
-
-### 1. **Simple Note Creation**
-
-- Create notes with just one function call
-- Specify title and content for each note
-- Automated ID generation for unique identification
-- Persistent storage on the Stellar blockchain
-
-### 2. **Efficient Data Retrieval**
-
-- Fetch all stored notes in a single call
-- Structured data representation for easy frontend integration
-- Quick access to your entire note collection
-- Real-time synchronization with the blockchain state
-
-### 3. **Secure Deletion**
-
-- Remove specific notes using their unique IDs
-- Permanent removal from the contract storage
-- Clean and efficient storage management
-- Immediate update of the note list after deletion
-
-### 4. **Transparency and Security**
-
-- View all note activities on the blockchain
-- Blockchain-based verification of all storage actions
-- Immutable records of note creation and deletion
-- Protected against unauthorized modifications
-
-### 5. **Stellar Network Integration**
-
-- Leverages the high speed and low cost of Stellar
-- Built using the modern Soroban Smart Contract SDK
-- Scalable architecture for growing note collections
-- Interoperable with other Stellar-based services
-
-## Contract Details
-
-- Contract Address: CBLU4IUASQ4WUMOXBFLZRSBBLILGOH33GS4LUPKFBCCCMJCDQNMF7G2M
-  (Screenshot has been removed)
-
-## Future Scope
-
-### Short-Term Enhancements
-
-1. **Note Encryption**: Support for end-to-end encryption of note content for enhanced privacy
-2. **Category Management**: Add tags and categories to organize notes efficiently
-3. **Rich Text Support**: Extend support beyond plain text to include Markdown and formatted content
-4. **Search Functionality**: Implement advanced search filters for large note collections
-
-### Medium-Term Development
-
-5. **Collaborative Notes**: Implement multi-signature requirements for shared or collaborative note-taking
-   - Shared access for multiple addresses
-   - Permission-based editing and viewing
-   - Version history tracking
-6. **Notification System**: Off-chain bridge to alert users of new updates or shared notes
-7. **Asset Attachment**: Capability to attach digital assets or tokens to specific notes
-8. **Inter-Contract Integration**: Allow other smart contracts to interact with and store data in the notes contract
-
-### Long-Term Vision
-
-9. **Cross-Chain Synchronization**: Extend note storage to multiple blockchain networks
-10. **Decentralized UI Hosting**: Host the frontend on IPFS or similar decentralized platforms
-11. **AI-Powered Summarization**: Optional integration with AI to help users summarize their notes
-12. **Privacy Layers**: Implement zero-knowledge proofs for completely private note content
-13. **DAO Governance**: Community-driven protocol improvements and feature prioritization
-14. **Identity Management**: Integration with decentralized identity (DID) systems for user management
-
-### Enterprise Features
-
-15. **Corporate Documentation**: Adapt the system for secure corporate record-keeping
-16. **Immutable Logging**: Create time-locked logs for audit purposes
-17. **Automated Reporting**: Automatic note triggers for periodic reporting
-18. **Multi-Language Support**: Expand accessibility with internationalization
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Built on Stellar](https://img.shields.io/badge/Built%20on-Stellar-blue)](https://stellar.org)
+[![Soroban](https://img.shields.io/badge/Smart%20Contracts-Soroban-purple)](https://soroban.stellar.org)
 
 ---
 
-## Technical Requirements
+## 🧩 Problem
 
-- Soroban SDK
-- Rust programming language
-- Stellar blockchain network
+A group of 5 freelancers in Manila sharing an office rental cannot easily collect
+contributions from each other before paying the landlord. One person fronts the full
+monthly cost, then manually chases four colleagues across different e-wallets (GCash,
+Maya, PayMaya) — often waiting days while missing the due date, paying late fees, or
+absorbing the entire cost alone.
 
-## Getting Started
-
-Deploy the smart contract to Stellar's Soroban network and interact with it using the three main functions:
-
-- `create_note()` - Create a new note with a title and content
-- `get_notes()` - Retrieve all stored notes from the contract
-- `delete_note()` - Remove a specific note by its ID
+The organizer bears **100% of the financial risk** and the social friction of repeated
+reminders, with zero on-chain enforcement or transparent audit trail.
 
 ---
 
-**Stellar Notes DApp** - Securing Your Thoughts on the Blockchain
+## ✅ Solution
+
+GroupPay Stellar uses a **Soroban smart contract** to create an on-chain escrow pool:
+
+1. The organizer defines the **target amount**, **deadline**, and **recipient wallet**
+2. Each group member calls `contribute()` to lock their XLM or USDC into the contract
+3. When the full target is reached, `release_payment()` sends the entire pool **atomically** to the recipient — no intermediary, no trust required
+4. If the deadline passes without hitting the target, any contributor calls `refund()` to recover their own funds in full
+
+**Why Stellar?** 3–5 second finality and sub-cent fees make micropayment-level contributions practical. Soroban provides programmable escrow with on-chain events for real-time front-end updates.
+
+---
+
+## ⭐ Stellar Features Used
+
+| Feature | Role |
+|---|---|
+| **Soroban Smart Contracts** | Core escrow: `create_group`, `contribute`, `release_payment`, `refund`, `get_status` |
+| **XLM / USDC Token Interface** | Actual money movement — members lock tokens into contract, released atomically |
+| **On-chain Events** | Front-end indexes contributions and releases in real-time without a database |
+| **Trustlines** | USDC trustline required per member wallet before contributing stablecoin |
+| **Testnet / Futurenet** | Development and hackathon demo environment |
+
+---
+
+## 🎯 Target Users
+
+| Segment | Description |
+|---|---|
+| **Freelancers** | Remote workers in Metro Manila / Cebu splitting co-working space, team dinners, or software subscriptions |
+| **University Students** | Org treasurers in PH / ID / VN collecting event fees, trip deposits, graduation payments from 10–50 members |
+| **SME Teams** | Small businesses in Jakarta or Ho Chi Minh City splitting supplier orders or trade-fair booth fees |
+| **Event Organizers** | Anyone coordinating group purchases: concert tickets, catered meals, venue deposits |
+
+---
+
+## 🏗️ Contract Architecture
+
+```
+src/
+├── lib.rs      ← Soroban contract (all business logic)
+└── test.rs     ← 3-test suite (happy path, edge case, state verification)
+Cargo.toml
+README.md
+```
+
+### Public Functions
+
+| Function | Description |
+|---|---|
+| `create_group(organizer, recipient, token, target, deadline, description)` | Initialise the payment pool (once per contract instance) |
+| `contribute(member, amount)` | Lock tokens into escrow, returns running total |
+| `release_payment()` | Atomically pay out pool to recipient when target is met |
+| `refund(member)` | Reclaim individual contribution after deadline if target not met |
+| `get_status()` | Read-only: returns `(total_collected, target, is_released)` |
+
+---
+
+## 🔄 MVP Transaction Flow
+
+```
+Organizer                  Contract                  Member(s)
+   │                          │                          │
+   │── create_group() ───────▶│                          │
+   │                          │ stores GroupConfig       │
+   │                          │ emits group:created      │
+   │                          │                          │
+   │                          │◀──── contribute() ───────│
+   │                          │ pulls tokens into escrow │
+   │                          │ emits contrib event      │
+   │                          │                          │
+   │── release_payment() ────▶│                          │
+   │                          │ transfers full pool      │
+   │                          │ to recipient             │
+   │                          │ emits released event     │
+```
+
+---
+
+## 📅 Suggested MVP Timeline
+
+| Day | Deliverable |
+|---|---|
+| **Day 1** | Soroban contract — `create_group`, `contribute`, `release_payment`, unit tests passing |
+| **Day 2** | Soroban contract — `refund`, `get_status`, full 3-test suite, testnet deploy |
+| **Day 3** | Next.js front-end — create group form, real-time progress bar, Freighter wallet integration |
+| **Day 4** | End-to-end demo polish — QR invite link, Stellar Explorer link, pitch preparation |
+
+---
+
+## 🛠️ Prerequisites
+
+```bash
+# Rust toolchain
+curl https://sh.rustup.rs -sSf | sh
+rustup target add wasm32-unknown-unknown
+
+# Soroban CLI v22
+cargo install --locked soroban-cli --version 22.0.0
+
+# Verify
+soroban --version
+```
+
+---
+
+## 🔨 Build
+
+```bash
+soroban contract build
+# → target/wasm32-unknown-unknown/release/grouppay_stellar.wasm
+```
+
+---
+
+## 🧪 Test
+
+```bash
+cargo test
+```
+
+Expected output:
+```
+running 3 tests
+test tests::test_happy_path_create_contribute_release ... ok
+test tests::test_contribute_rejected_after_release ... ok
+test tests::test_state_reflects_contributions ... ok
+
+test result: ok. 3 passed; 0 failed
+```
+
+---
+
+## 🚀 Deploy to Testnet
+
+### 1. Generate and fund a test identity
+
+```bash
+soroban keys generate --global alice --network testnet
+soroban keys fund alice --network testnet
+```
+
+### 2. Deploy the contract
+
+```bash
+soroban contract deploy \
+  --wasm target/wasm32-unknown-unknown/release/grouppay_stellar.wasm \
+  --source alice \
+  --network testnet
+# Outputs: CONTRACT_ID — save this!
+```
+
+---
+
+## 🖥️ CLI Invocations
+
+### `create_group`
+
+```bash
+soroban contract invoke \
+  --id CONTRACT_ID \
+  --source alice \
+  --network testnet \
+  -- create_group \
+     --organizer GAABC...ORGANIZER \
+     --recipient GBPAY...RECIPIENT \
+     --token CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC \
+     --target 5000000 \
+     --deadline 1800000000 \
+     --description OfficeRent
+```
+
+### `contribute`
+
+```bash
+soroban contract invoke \
+  --id CONTRACT_ID \
+  --source bob \
+  --network testnet \
+  -- contribute \
+     --member GBOB...MEMBER \
+     --amount 1000000
+```
+
+### `release_payment`
+
+```bash
+soroban contract invoke \
+  --id CONTRACT_ID \
+  --source alice \
+  --network testnet \
+  -- release_payment
+```
+
+### `refund`
+
+```bash
+soroban contract invoke \
+  --id CONTRACT_ID \
+  --source bob \
+  --network testnet \
+  -- refund \
+     --member GBOB...MEMBER
+```
+
+### `get_status`
+
+```bash
+soroban contract invoke \
+  --id CONTRACT_ID \
+  --source alice \
+  --network testnet \
+  -- get_status
+# Returns: (total_collected, target, is_released)
+# e.g.    → [500000, 1000000, false]
+```
+
+---
+
+## 🌐 References
+
+- Stellar Bootcamp 2026: https://github.com/armlynobinguar/Stellar-Bootcamp-2026
+- Example Full-Stack (community-treasury): https://github.com/armlynobinguar/community-treasury
+- Soroban Docs: https://soroban.stellar.org/docs
+- Stellar Testnet Faucet: https://friendbot.stellar.org
+
+---
+
+## 🗺️ Roadmap (Post-Hackathon)
+
+- [ ] GCash / Maya on-ramp via MoneyGram Ramps (PHP → USDC)
+- [ ] AI-powered bill-split suggestion (paste receipt image → suggested amounts)
+- [ ] Freighter deep-link QR code for mobile tap-to-pay
+- [ ] Offline contribution queuing with IndexedDB sync
+- [ ] Multi-token support (any Stellar asset)
+- [ ] Recurring group payments (monthly rent, subscriptions)
+
+---
+
+## 📄 License
+
+MIT License — Copyright (c) 2026 GroupPay Stellar Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
